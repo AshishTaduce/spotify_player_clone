@@ -2,17 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:spotify_player_clone/song.dart';
 import 'package:audioplayers/audioplayers.dart';
 
+
 void main() {
   runApp(MaterialApp(
+      theme: ThemeData(fontFamily: 'proximanova-regular'),
       home: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Best of Hindi',
-          ),
-        ),
-        body: SpotifyPlayer(),
-      )
-  ));
+    appBar: AppBar(
+      backgroundColor: Colors.black,
+      centerTitle: true,
+      title: Text(
+        'Best of Hindi',
+        style: TextStyle(
+            //color: Colors.black
+            ),
+      ),
+    ),
+    body: SpotifyPlayer(),
+  )));
 }
 
 class SpotifyPlayer extends StatefulWidget {
@@ -21,16 +27,221 @@ class SpotifyPlayer extends StatefulWidget {
 }
 
 class _SpotifyPlayerState extends State<SpotifyPlayer> {
-
   Song dummySong = Song(
       'Duniyaa',
       'https://p.scdn.co/mp3-preview/4efd033217aa13f4625d37f95efa676fb02d4778?cid=774b29d4f13844c495f206cafdad9c86',
       'https://i.scdn.co/image/f218335b215402cc2fb3b8d92652ebad48458805',
       'Luka Chuppi');
-  List<Song> allSongs = SongData().songs; // You are given a list of songs here for Stretch
+  AudioPlayer audioPlayer = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
+  List<Song> allSongs = SongData().songs;
 
+  // You are given a list of songs here for Stretch
+  var state = 0;
+  int result;
   @override
+  List name = [];
+  List song = [];
+  List image = [];
+  List artist = [];
+  int index = 0;
+  void listMaker(){
+    for (var x in allSongs){
+      name.add(x.name);
+    }
+    for (var x in allSongs){
+      song.add(x.playUrl);
+    }
+    for (var x in allSongs){
+      song.add(x.imageUrl);
+    }
+    for (var x in allSongs){
+      song.add(x.artistName);
+    }
+
+    for (var x in name){
+      print(x);
+    }
+    for (var x in song){
+      print(x);
+    }
+    for (var x in image){
+      print(x);
+    }
+    for (var x in artist){
+      print(x);
+    }
+  }
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+
+      color: Colors.black,
+      child: Column(
+        children: <Widget>[
+
+          Expanded(
+            flex: 10,
+            child: Container(
+              child: Text(' '),
+              color: Colors.black,
+            ),
+          ),
+          Expanded(
+            flex: 50,
+            child: FittedBox(
+              child: Image.network(
+                //'${image[0]}',
+                'https://i.scdn.co/image/f218335b215402cc2fb3b8d92652ebad48458805',
+              ),
+              fit: BoxFit.fill,
+            ),
+          ),
+          Expanded(
+            flex: 15,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 12, 12, 5),
+                  child: Text(
+                    'Duniyaa',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 38,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 0, horizontal: 12),
+                  child: Text(
+                    'Luka Chuppi',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 15,
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  flex: 8,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(
+                          Icons.thumb_up,
+                          color: Colors.white,
+                          size: 22,
+                        ),
+                        iconSize: 24,
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.skip_previous,
+                          color: Colors.white,
+                          size: 22,
+                        ),
+                        iconSize: 24,
+                        onPressed: (){
+                          setState(() {
+                            if (index == 0 ){
+                              index = song.length;
+                            }
+                            else{
+                              index = index - 1;
+                            }
+                          },
+                          );
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.play_circle_filled,
+                          color: Colors.white,
+                          size: 82,
+                        ),
+                        iconSize: 84,
+                        onPressed: (){
+                          setState(() {
+                            if (state == 2 || state == 1){
+                              audioPlayer.onPlayerCompletion.listen((event) {
+                                audioPlayer.play(
+                                  '${song[index]}',);
+                              });
+                              state = 1;
+                            }
+
+                            else
+                            if (state == 0){
+                              audioPlayer.play(
+                                '${song[index]}',);
+                              state = 1;
+                              }
+                              else if (state == 1){
+                                audioPlayer.pause();
+                                state = 2;
+                              }
+                               else {
+                                audioPlayer.resume();
+                                state = 1;
+                              }
+
+                          },
+                          );
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.skip_next,
+                          color: Colors.white,
+                          size: 22,
+                        ),
+                        iconSize: 24,
+                        onPressed: (){
+                          setState(() {
+                            if (index == song.length ){
+                              index = 0;
+                            }
+                            else{
+                              index = index + 1;
+                            }
+                          },
+                          );
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.thumb_down,
+                          color: Colors.white,
+                          size: 22,
+                        ),
+                        iconSize: 24,
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    child: Text(' '),
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
