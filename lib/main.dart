@@ -43,7 +43,8 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
   int result;
   var play = [Icons.play_circle_filled,Icons.pause_circle_filled];
   var icon = 0;
-  int r = 0;
+  var r = 0;
+  var rl = [Icons.repeat,Icons.repeat_one,Colors.white,Colors.green];
 
   @override
   void initState() {
@@ -51,7 +52,6 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
     super.initState();
   }
   void listMaker(){
-    index = 0;
     for (var x in allSongs){
       name.add(x.name);
     }
@@ -222,13 +222,20 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                       ),
                       IconButton(
                         icon: Icon(
-                          Icons.repeat,
-                          color: Colors.white,
+                          rl[r],
+                          color: rl[r + 2],
                           size: 22,
                         ),
                         onPressed: (){
                           setState(() {
-                            index = 2;
+                            if (r == 0){
+                              r = 1;
+                              audioPlayer.setReleaseMode(ReleaseMode.LOOP);
+                            }
+                            else{
+                             r = 0;
+                             audioPlayer.setReleaseMode(ReleaseMode.STOP);
+                            }
                           });
                         },
                         iconSize: 24,
