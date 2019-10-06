@@ -38,13 +38,12 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
   List song = [];
   List image = [];
   List artist = [];
-
-
-
-  var index = 0;
-  // You are given a list of songs here for Stretch
+  var index = 9;
   var state = 0;
   int result;
+  var play = [Icons.play_circle_filled,Icons.pause_circle_filled];
+  var icon = 0;
+  int r = 0;
 
   @override
   void initState() {
@@ -176,32 +175,27 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                       ),
                       IconButton(
                         icon: Icon(
-                          Icons.play_circle_filled,
+                          play[icon],
                           color: Colors.white,
                           size: 82,
                         ),
                         iconSize: 84,
                         onPressed: (){
                           setState(() {
-                            if (state == 2 || state == 1){
-                              audioPlayer.onPlayerCompletion.listen((event) {
-                                audioPlayer.play(
-                                  '${song[0]}',);
-                              });
-                              state = 1;
-                            }
-                            else if (state == 0){
+                            if (state == 0){
                               audioPlayer.play(
-                                '${song[0]}',);
-                              state = 1;
+                                '${song[index]}',);
+                                state = 1;
                               }
                             else if (state == 1){
                                 audioPlayer.pause();
                                 state = 2;
+                                icon = 1;
                               }
                             else {
                                 audioPlayer.resume();
                                 state = 1;
+                                icon = 0;
                               }
                             },
                           );
@@ -228,7 +222,7 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                       ),
                       IconButton(
                         icon: Icon(
-                          Icons.thumb_down,
+                          Icons.repeat,
                           color: Colors.white,
                           size: 22,
                         ),
