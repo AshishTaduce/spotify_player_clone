@@ -49,7 +49,7 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
   @override
   void initState() {
     listMaker();
-    super.initState();
+    
   }
   void listMaker(){
     index = 0;
