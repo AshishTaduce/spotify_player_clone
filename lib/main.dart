@@ -230,11 +230,18 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                           setState(() {
                             if (r == 0){
                               r = 1;
-                              audioPlayer.setReleaseMode(ReleaseMode.LOOP);
+                              //audioPlayer.setReleaseMode(ReleaseMode.LOOP);
                             }
+//                            else if(r == 1){
+//                            r = 0;
+//                            if (index == name.length){
+//                              index = 0;
+//                            }
+//                            //audioPlayer.setReleaseMode(ReleaseMode.STOP);
+//                          }
                             else{
                              r = 0;
-                             audioPlayer.setReleaseMode(ReleaseMode.STOP);
+                             //audioPlayer.setReleaseMode(ReleaseMode.STOP);
                             }
                           });
                         },
