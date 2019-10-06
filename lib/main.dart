@@ -34,17 +34,25 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
       'Luka Chuppi');
   AudioPlayer audioPlayer = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
   List<Song> allSongs = SongData().songs;
-
-  // You are given a list of songs here for Stretch
-  var state = 0;
-  int result;
-  @override
   List name = [];
   List song = [];
   List image = [];
   List artist = [];
-  int index = 0;
+
+
+
+  var index = 0;
+  // You are given a list of songs here for Stretch
+  var state = 0;
+  int result;
+
+  @override
+  void initState() {
+    listMaker();
+    super.initState();
+  }
   void listMaker(){
+    index = 0;
     for (var x in allSongs){
       name.add(x.name);
     }
@@ -71,6 +79,8 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
       print(x);
     }
   }
+
+
   Widget build(BuildContext context) {
     return Container(
 
@@ -90,7 +100,7 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
             child: FittedBox(
               child: Image.network(
                 //'${image[0]}',
-                'https://i.scdn.co/image/f218335b215402cc2fb3b8d92652ebad48458805',
+               'https://i.scdn.co/image/f218335b215402cc2fb3b8d92652ebad48458805',
               ),
               fit: BoxFit.fill,
             ),
@@ -146,23 +156,23 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                         iconSize: 24,
                       ),
                       IconButton(
+                        onPressed: (){
+                          setState(() {
+                            if (index == 0){
+                              index = song.length;
+                            }
+                            else {
+                              index = index - 1;
+                            }
+                          },
+                          );
+                        },
                         icon: Icon(
                           Icons.skip_previous,
                           color: Colors.white,
                           size: 22,
                         ),
                         iconSize: 24,
-                        onPressed: (){
-                          setState(() {
-                            if (index == 0 ){
-                              index = song.length;
-                            }
-                            else{
-                              index = index - 1;
-                            }
-                          },
-                          );
-                        },
                       ),
                       IconButton(
                         icon: Icon(
@@ -176,48 +186,45 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                             if (state == 2 || state == 1){
                               audioPlayer.onPlayerCompletion.listen((event) {
                                 audioPlayer.play(
-                                  '${song[index]}',);
+                                  '${song[0]}',);
                               });
                               state = 1;
                             }
-
-                            else
-                            if (state == 0){
+                            else if (state == 0){
                               audioPlayer.play(
-                                '${song[index]}',);
+                                '${song[0]}',);
                               state = 1;
                               }
-                              else if (state == 1){
+                            else if (state == 1){
                                 audioPlayer.pause();
                                 state = 2;
                               }
-                               else {
+                            else {
                                 audioPlayer.resume();
                                 state = 1;
                               }
-
-                          },
+                            },
                           );
                         },
                       ),
                       IconButton(
+                        onPressed: (){
+                          setState(() {
+                            if (index == song.length){
+                              index = 0;
+                            }
+                            else {
+                              index = index + 1;
+                            }
+                          },
+                          );
+                        },
                         icon: Icon(
                           Icons.skip_next,
                           color: Colors.white,
                           size: 22,
                         ),
                         iconSize: 24,
-                        onPressed: (){
-                          setState(() {
-                            if (index == song.length ){
-                              index = 0;
-                            }
-                            else{
-                              index = index + 1;
-                            }
-                          },
-                          );
-                        },
                       ),
                       IconButton(
                         icon: Icon(
@@ -225,6 +232,11 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                           color: Colors.white,
                           size: 22,
                         ),
+                        onPressed: (){
+                          setState(() {
+                            index = 2;
+                          });
+                        },
                         iconSize: 24,
                       ),
                     ],
