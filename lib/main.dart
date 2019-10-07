@@ -34,14 +34,15 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
       'Luka Chuppi');
   AudioPlayer audioPlayer = AudioPlayer();
   List<Song> allSongs = SongData().songs;
-  var index = 0;
-  var state = 0;
+
   var play = [Icons.play_circle_filled,Icons.pause_circle_filled];
   var icon = 0;
   var r = 0;
   var rl = [Icons.repeat,Icons.repeat_one,Colors.white,Colors.green];
 
   Song currentSong ;
+  var index = 0;
+  var state = 0;
 
   @override
   void initState() {
@@ -57,22 +58,10 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
       color: Colors.black,
       child: Column(
         children: <Widget>[
-
-          Expanded(
-            flex: 10,
-            child: Container(
-              child: Text(' '),
-              color: Colors.black,
-            ),
-          ),
           Expanded(
             flex: 50,
-            child: FittedBox(
-              child: Image.network(
-                '${currentSong.imageUrl}',
-               //'https://i.scdn.co/image/f218335b215402cc2fb3b8d92652ebad48458805',
-              ),
-              fit: BoxFit.fill,
+            child: Image.network(
+              '${currentSong.imageUrl}',
             ),
           ),
           Expanded(
@@ -89,7 +78,7 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 38,
+                      fontSize: 32,
                     ),
                   ),
                 ),
@@ -112,6 +101,9 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
           Expanded(
             flex: 15,
             child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Expanded(
                   flex: 8,
@@ -170,7 +162,6 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                             if (state == 0){
                               audioPlayer.play(
                                 currentSong.playUrl,
-                                //'${song[index]}',
                               );
                                 state = 1;
                               }
