@@ -121,6 +121,7 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                           setState(() {
                             print(index);
                             print(r);
+                            print(state);
                           }
                           );
                         },
@@ -159,11 +160,13 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                         iconSize: 84,
                         onPressed: (){
                           setState(() {
+                            print(state);
                             if (state == 0){
                               audioPlayer.play(
                                 currentSong.playUrl,
+
                               );
-                                state = 1;
+                              state = 1;
                               }
                             else if (state == 4){
                               audioPlayer.pause();
