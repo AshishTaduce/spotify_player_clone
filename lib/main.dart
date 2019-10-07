@@ -59,24 +59,12 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
       song.add(x.playUrl);
     }
     for (var x in allSongs){
-      song.add(x.imageUrl);
+      image.add(x.imageUrl);
     }
     for (var x in allSongs){
-      song.add(x.artistName);
+      artist.add(x.artistName);
     }
 
-    for (var x in name){
-      print(x);
-    }
-    for (var x in song){
-      print(x);
-    }
-    for (var x in image){
-      print(x);
-    }
-    for (var x in artist){
-      print(x);
-    }
   }
 
 
@@ -98,8 +86,8 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
             flex: 50,
             child: FittedBox(
               child: Image.network(
-                //'${image[0]}',
-               'https://i.scdn.co/image/f218335b215402cc2fb3b8d92652ebad48458805',
+                '${dummySong.imageUrl}',
+               //'https://i.scdn.co/image/f218335b215402cc2fb3b8d92652ebad48458805',
               ),
               fit: BoxFit.fill,
             ),
@@ -113,7 +101,8 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(12, 12, 12, 5),
                   child: Text(
-                    '${name[index]}',
+                    dummySong.name,
+                    //name[index],
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.white,
@@ -125,7 +114,8 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                   padding:
                       const EdgeInsets.symmetric(vertical: 0, horizontal: 12),
                   child: Text(
-                    'Luka Chuppi',
+                    dummySong.artistName,
+                    //artist[index],
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.white,
@@ -172,7 +162,7 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                             }
                             audioPlayer.stop();
                             audioPlayer.play(
-                              '${song[index]}',);
+                              dummySong.playUrl,);
                             state = 4;
                             icon = 1;
                           },
@@ -196,7 +186,9 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                           setState(() {
                             if (state == 0){
                               audioPlayer.play(
-                                '${song[index]}',);
+                                dummySong.playUrl,
+                                //'${song[index]}',
+                              );
                                 state = 1;
                               }
                             else if (state == 4){
@@ -234,7 +226,7 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                             }
                             audioPlayer.stop();
                             audioPlayer.play(
-                              '${song[index]}',);
+                              dummySong.playUrl,);
                             state = 4;
                             icon = 1;
                           },
