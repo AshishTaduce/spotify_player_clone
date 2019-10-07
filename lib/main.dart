@@ -113,7 +113,7 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(12, 12, 12, 5),
                   child: Text(
-                    'Duniyaa',
+                    '${name[index]}',
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.white,
@@ -257,7 +257,7 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                           setState(() {
                             if (r == 0){
                               r = 1;
-                              //audioPlayer.setReleaseMode(ReleaseMode.LOOP);
+                             // audioPlayer.onPlayerCompletion.listen((event) {setState(() {audioPlayer.play('${song[index]}',);})});
                             }
 //                            else if(r == 1){
 //                            r = 0;
@@ -268,7 +268,7 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
 //                          }
                             else{
                              r = 0;
-                             //audioPlayer.setReleaseMode(ReleaseMode.STOP);
+
                             }
                           });
                         },
