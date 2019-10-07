@@ -152,6 +152,13 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                           color: Colors.white,
                           size: 22,
                         ),
+                        onPressed: (){
+                          setState(() {
+                            print(index);
+                            print(r);
+                          }
+                          );
+                        },
                         iconSize: 24,
                       ),
                       IconButton(
@@ -163,6 +170,11 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                             else {
                               index = index - 1;
                             }
+                            audioPlayer.stop();
+                            audioPlayer.play(
+                              '${song[index]}',);
+                            state = 4;
+                            icon = 1;
                           },
                           );
                         },
@@ -187,6 +199,16 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                                 '${song[index]}',);
                                 state = 1;
                               }
+                            else if (state == 4){
+                              audioPlayer.pause();
+                              icon = 1;
+                              state = 5;
+                            }
+                            else if (state == 5){
+                              audioPlayer.resume();
+                              icon = 0;
+                              state = 4;
+                            }
                             else if (state == 1){
                                 audioPlayer.pause();
                                 state = 2;
@@ -210,6 +232,11 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                             else {
                               index = index + 1;
                             }
+                            audioPlayer.stop();
+                            audioPlayer.play(
+                              '${song[index]}',);
+                            state = 4;
+                            icon = 1;
                           },
                           );
                         },
