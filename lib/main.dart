@@ -60,8 +60,11 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
         children: <Widget>[
           Expanded(
             flex: 50,
-            child: Image.network(
-              '${currentSong.imageUrl}',
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Image.network(
+                '${currentSong.imageUrl}',
+              ),
             ),
           ),
           Expanded(
@@ -139,7 +142,7 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                             audioPlayer.stop();
                             audioPlayer.play(
                               currentSong.playUrl,);
-                            state = 4;
+                            state = 1;
                             icon = 1;
                           },
                           );
@@ -161,6 +164,11 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                         onPressed: (){
                           setState(() {
                             print(state);
+                            if (index == 0){
+                              audioPlayer.play(
+                                currentSong.playUrl,
+                              );
+                            }
                             if (state == 0){
                               audioPlayer.play(
                                 currentSong.playUrl,
@@ -168,17 +176,7 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                               );
                               state = 1;
                               }
-                            else if (state == 4){
-                              audioPlayer.pause();
-                              icon = 1;
-                              state = 5;
-                            }
-                            else if (state == 5){
-                              audioPlayer.resume();
-                              icon = 0;
-                              state = 4;
-                            }
-                            else if (state == 1){
+                            if (state == 1){
                                 audioPlayer.pause();
                                 state = 2;
                                 icon = 1;
@@ -195,17 +193,20 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                       IconButton(
                         onPressed: (){
                           setState(() {
-                            if (index == allSongs.length - 1){
+                            print ('index $index');
+                            if (index == allSongs.length -1){
                               index = 0;
                             }
+
                             else {
                               index = index + 1;
                             }
                             audioPlayer.stop();
                             audioPlayer.play(
                               currentSong.playUrl,);
-                            state = 4;
+                            state = 1;
                             icon = 1;
+                            print ('index $index');
                           },
                           );
                         },
